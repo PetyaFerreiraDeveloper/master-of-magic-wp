@@ -77,12 +77,12 @@ jobs:
             --exclude='**/resources/**' \
             --exclude='**/README.md'
 
-      - name: Upload wp-content via SCP
+      - name: Upload wp-content via SCP (SSH key)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.NORDICWAY_SSH_HOST }}
           username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
-          password: ${{ secrets.NORDICWAY_SSH_PASSWORD }}
+          key: ${{ secrets.NORDICWAY_SSH_KEY }}           # <-- changed from password:
           port: ${{ secrets.NORDICWAY_SSH_PORT }}
           source: "artifact/wp-content/*"
           target: "${{ secrets.NORDICWAY_DEST_PATH }}/"
@@ -93,13 +93,15 @@ jobs:
         with:
           host: ${{ secrets.NORDICWAY_SSH_HOST }}
           username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
-          password: ${{ secrets.NORDICWAY_SSH_PASSWORD }}
+          key: ${{ secrets.NORDICWAY_SSH_KEY }}           # <-- changed from password:
           port: ${{ secrets.NORDICWAY_SSH_PORT }}
           script_stop: true
           script: |
             echo "✅ Deployment completed on Nordicway (${{ inputs.environment }})"
-            echo "--- Themes ---"
-            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}/themes" || echo "No themes directory found"
-            echo "--- Plugins ---"
-            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}/plugins" || echo "No plugins directory found"
+            echo "--- wp-content ---"
+            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}" || true
+            echo "--- themes ---"
+            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}/themes" || true
+            echo "--- plugins ---"
+            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}/plugins" || true
             php -v || true

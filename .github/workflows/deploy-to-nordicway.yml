@@ -58,7 +58,7 @@ jobs:
       #     npm ci
       #     npm run build
 
-      - name: Prepare deploy artifact (whole wp-content minus uploads/runtime dirs)
+      - name: Prepare deploy artifact (whole wp-content minus uploads/runtime/dev junk)
         run: |
           mkdir -p artifact/wp-content
           rsync -av wp-content/ artifact/wp-content \
@@ -77,23 +77,44 @@ jobs:
             --exclude='**/resources/**' \
             --exclude='**/README.md'
 
+      # Ensure destination exists and create a writable per-user tmp dir for appleboy/scp-action
+      - name: Preflight (ensure paths exist)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.NORDICWAY_SSH_HOST }}
+          username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
+          key: ${{ secrets.NORDICWAY_SSH_KEY }}
+          port: ${{ secrets.NORDICWAY_SSH_PORT }}
+          script_stop: true
+          script: |
+            set -e
+            echo "Ensuring destination path exists…"
+            mkdir -p "${{ secrets.NORDICWAY_DEST_PATH }}"
+            echo "Creating per-user tmp dir…"
+            mkdir -p "/home/${USER}/tmp" || mkdir -p "$HOME/tmp"
+            echo "tar version:"
+            which tar && tar --version
+
       - name: Upload wp-content via SCP (SSH key)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.NORDICWAY_SSH_HOST }}
           username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
-          key: ${{ secrets.NORDICWAY_SSH_KEY }}           # <-- changed from password:
+          key: ${{ secrets.NORDICWAY_SSH_KEY }}
           port: ${{ secrets.NORDICWAY_SSH_PORT }}
+          # copy the contents of artifact/wp-content into the remote wp-content
           source: "artifact/wp-content/*"
           target: "${{ secrets.NORDICWAY_DEST_PATH }}/"
           overwrite: true
+          # avoid /tmp noexec by forcing a home-based tmp directory
+          tar_tmp_path: "/home/${{ secrets.NORDICWAY_SSH_USERNAME }}/tmp"
 
       - name: Post-deploy sanity check
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.NORDICWAY_SSH_HOST }}
           username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
-          key: ${{ secrets.NORDICWAY_SSH_KEY }}           # <-- changed from password:
+          key: ${{ secrets.NORDICWAY_SSH_KEY }}
           port: ${{ secrets.NORDICWAY_SSH_PORT }}
           script_stop: true
           script: |

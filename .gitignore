@@ -1,0 +1,21 @@
+# Ignore everything inside wp-content
+/wp-content/*
+!/wp-content/themes/
+!/wp-content/plugins/
+
+# Ignore all themes and plugins
+/wp-content/themes/*
+/wp-content/plugins/*
+
+# Allow only specific theme and plugin
+!/wp-content/themes/masterofmagic/
+!/wp-content/themes/masterofmagic/**
+
+!/wp-content/plugins/masterofmagic-blocks/
+!/wp-content/plugins/masterofmagic-blocks/**
+
+# Ignore vendor and node_modules directories
+/vendor/
+/node_modules/
+
+.DS_Store

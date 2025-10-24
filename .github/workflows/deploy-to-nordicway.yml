@@ -1,19 +1,27 @@
-# .github/workflows/deploy-to-nordicway.yml
 name: Deploy to Nordicway
 
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      ref:
+        required: false
+        type: string
+        default: ""
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to deploy to"
+        description: 'Environment to deploy to'
         required: true
-        default: "staging"
+        default: 'staging'
         type: choice
         options:
           - staging
           - production
       ref:
-        description: "Branch, tag, or SHA to deploy (empty = default branch)"
+        description: 'Branch, tag, or SHA to deploy (empty = default branch)'
         required: false
         type: string
 
@@ -21,10 +29,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-
-    concurrency:
-      group: nordicway-${{ inputs.environment }}
-      cancel-in-progress: true
 
     steps:
       - name: Checkout code
@@ -38,31 +42,63 @@ jobs:
         with:
           node-version: "20"
 
-      # Uncomment if you build assets for your theme/plugin
-      # - name: Build Theme
+      # - name: Install and Build Theme
       #   working-directory: wp-content/themes/masterofmagic
       #   run: |
       #     npm ci
       #     npm run build
 
-      # - name: Build Plugin
+      # - name: Install and Build Plugin
       #   working-directory: wp-content/plugins/masterofmagic-blocks
       #   run: |
       #     npm ci
       #     npm run build
 
-      - name: Prepare deploy artifact
+      - name: Prepare Nordicway Structure (Exclude Unwanted Files)
         run: |
-          mkdir -p artifact/wp-content/themes/masterofmagic
-          mkdir -p artifact/wp-content/plugins/masterofmagic-blocks
+          THEME_NAME=masterofmagic
+          # PLUGIN_NAME=masterofmagic-blocks
 
-          rsync -av wp-content/themes/masterofmagic/ artifact/wp-content/themes/masterofmagic \
-            --exclude=node_modules --exclude=.git --exclude=.github --exclude=.gitignore --exclude=package*.json --exclude=composer.* --exclude=resources
+          mkdir -p nordicway/wp-content/themes/$THEME_NAME
+          # mkdir -p nordicway/wp-content/plugins/$PLUGIN_NAME
 
-          rsync -av wp-content/plugins/masterofmagic-blocks/ artifact/wp-content/plugins/masterofmagic-blocks \
-            --exclude=node_modules --exclude=.git --exclude=.github --exclude=.gitignore --exclude=package*.json --exclude=composer.* --exclude=resources
+          # Copy only necessary theme files
+          rsync -av wp-content/themes/$THEME_NAME/ nordicway/wp-content/themes/$THEME_NAME \
+            --exclude=node_modules \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=.gitignore \
+            --exclude=.prettierrc \
+            --exclude=package*.json \
+            --exclude=composer.* \
+            --exclude=webpack.* \
+            --exclude=vite.* \
+            --exclude=resources \
+            --exclude=README.md
 
-      - name: Deploy to Nordicway via rsync
+          # Copy only necessary plugin files
+          # rsync -av wp-content/plugins/$PLUGIN_NAME/ nordicway/wp-content/plugins/$PLUGIN_NAME \
+          #   --exclude=node_modules \
+          #   --exclude=.git \
+          #   --exclude=.github \
+          #   --exclude=.gitignore \
+          #   --exclude=.prettierrc \
+          #   --exclude=package*.json \
+          #   --exclude=composer.* \
+          #   --exclude=webpack.* \
+          #   --exclude=vite.* \
+          #   --exclude=resources \
+          #   --exclude=README.md
+
+      - name: Write SSH key & add host
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.NORDICWAY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ secrets.NORDICWAY_SSH_PORT }} ${{ secrets.NORDICWAY_SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to Nordicway Server
         env:
           HOST: ${{ secrets.NORDICWAY_SSH_HOST }}
           USER: ${{ secrets.NORDICWAY_SSH_USERNAME }}
@@ -70,15 +106,18 @@ jobs:
           DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
         run: |
           echo "Deploying to $USER@$HOST:$DEST"
-          mkdir -p ~/.ssh
-          echo "${{ secrets.NORDICWAY_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p $PORT $HOST >> ~/.ssh/known_hosts
 
-          RSYNC_RSH="ssh -i ~/.ssh/id_rsa -p $PORT -o StrictHostKeyChecking=yes"
-          rsync -az --delete artifact/wp-content/themes/masterofmagic/ "$USER@$HOST:$DEST/themes/masterofmagic/"
-          rsync -az --delete artifact/wp-content/plugins/masterofmagic-blocks/ "$USER@$HOST:$DEST/plugins/masterofmagic-blocks/"
+          # Copy theme and plugin folders to Nordicway server
+          scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/themes/masterofmagic \
+            "$USER@$HOST:$DEST/themes/"
+          scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/plugins/masterofmagic-blocks \
+            "$USER@$HOST:$DEST/plugins/"
+
+          echo "✅ Deployment finished to ${{ inputs.environment }}"
 
       - name: Post-deploy sanity check
         run: |
-          echo "✅ Deployment completed to ${{ inputs.environment }}"
+          ssh -i ~/.ssh/deploy_key -p ${{ secrets.NORDICWAY_SSH_PORT }} \
+            ${{ secrets.NORDICWAY_SSH_USERNAME }}@${{ secrets.NORDICWAY_SSH_HOST }} \
+            "echo '--- Themes ---'; ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/themes' || true;
+             echo '--- Plugins ---'; ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/plugins' || true;"

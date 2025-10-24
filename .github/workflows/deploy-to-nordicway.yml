@@ -13,15 +13,15 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy to'
+        description: "Environment to deploy to"
         required: true
-        default: 'staging'
+        default: "staging"
         type: choice
         options:
           - staging
           - production
       ref:
-        description: 'Branch, tag, or SHA to deploy (empty = default branch)'
+        description: "Branch, tag, or SHA to deploy (empty = default branch)"
         required: false
         type: string
 
@@ -45,13 +45,15 @@ jobs:
       # - name: Install and Build Theme
       #   working-directory: wp-content/themes/masterofmagic
       #   run: |
-      #     npm ci
+      #     rm -rf public
+      #     npm install
       #     npm run build
 
       # - name: Install and Build Plugin
       #   working-directory: wp-content/plugins/masterofmagic-blocks
       #   run: |
-      #     npm ci
+      #     rm -rf build
+      #     npm install
       #     npm run build
 
       - name: Prepare Nordicway Structure (Exclude Unwanted Files)
@@ -69,12 +71,13 @@ jobs:
             --exclude=.github \
             --exclude=.gitignore \
             --exclude=.prettierrc \
-            --exclude=package*.json \
-            --exclude=composer.* \
-            --exclude=webpack.* \
-            --exclude=vite.* \
+            --exclude=package.json \
+            --exclude=package-lock.json \
+            --exclude=webpack.config.js \
+            --exclude=phpcs.xml \
+            --exclude=composer.json \
+            --exclude=composer.lock \
             --exclude=resources \
-            --exclude=README.md
 
           # Copy only necessary plugin files
           # rsync -av wp-content/plugins/$PLUGIN_NAME/ nordicway/wp-content/plugins/$PLUGIN_NAME \
@@ -82,13 +85,14 @@ jobs:
           #   --exclude=.git \
           #   --exclude=.github \
           #   --exclude=.gitignore \
-          #   --exclude=.prettierrc \
-          #   --exclude=package*.json \
-          #   --exclude=composer.* \
-          #   --exclude=webpack.* \
-          #   --exclude=vite.* \
-          #   --exclude=resources \
-          #   --exclude=README.md
+          #   --exclude=package.json \
+          #   --exclude=package-lock.json \
+          #   --exclude=webpack.config.js \
+          #   --exclude=phpcs.xml \
+          #   --exclude=composer.json \
+          #   --exclude=composer.lock \
+          #   --exclude=README.md \
+          #   --exclude=src \
 
       - name: Write SSH key & add host
         run: |
@@ -98,6 +102,17 @@ jobs:
           ssh-keyscan -p ${{ secrets.NORDICWAY_SSH_PORT }} ${{ secrets.NORDICWAY_SSH_HOST }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
+      - name: Create remote wp-content subfolders
+        env:
+          HOST: ${{ secrets.NORDICWAY_SSH_HOST }}
+          USER: ${{ secrets.NORDICWAY_SSH_USERNAME }}
+          PORT: ${{ secrets.NORDICWAY_SSH_PORT }}
+          DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "$PORT" \
+            -o StrictHostKeyChecking=yes \
+            "$USER@$HOST" "mkdir -p '$DEST/themes' '$DEST/plugins'"
+
       - name: Deploy to Nordicway Server
         env:
           HOST: ${{ secrets.NORDICWAY_SSH_HOST }}
@@ -105,13 +120,13 @@ jobs:
           PORT: ${{ secrets.NORDICWAY_SSH_PORT }}
           DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
         run: |
-          echo "Deploying to $USER@$HOST:$DEST"
+          echo "Deploying theme to $USER@$HOST:$DEST"
 
-          # Copy theme and plugin folders to Nordicway server
           scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/themes/masterofmagic \
             "$USER@$HOST:$DEST/themes/"
-          scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/plugins/masterofmagic-blocks \
-            "$USER@$HOST:$DEST/plugins/"
+
+          # scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/plugins/masterofmagic-blocks \
+          #   "$USER@$HOST:$DEST/plugins/"
 
           echo "✅ Deployment finished to ${{ inputs.environment }}"
 

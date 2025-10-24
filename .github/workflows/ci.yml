@@ -1,0 +1,16 @@
+name: CI and CD (Nordicway Staging)
+
+on:
+  push:
+    branches:
+      - main
+  # Optional: comment out if you only want automatic deploys
+  workflow_dispatch:
+
+jobs:
+  setup-build-deploy-staging:
+    uses: ./.github/workflows/deploy-to-nordicway.yml
+    with:
+      environment: staging
+      ref: ${{ github.ref_name }} # deploy the exact branch/tag that triggered
+    secrets: inherit

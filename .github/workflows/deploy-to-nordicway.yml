@@ -1,0 +1,115 @@
+# .github/workflows/deploy-to-nordicway.yml
+name: Deploy to Nordicway
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      ref:
+        required: false
+        type: string
+        default: ""
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options: [staging]
+      ref:
+        description: 'Branch, tag, or SHA to deploy (empty = default branch)'
+        required: false
+        type: string
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref != '' && inputs.ref || github.ref }}
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # --- OPTIONAL: build steps for your theme/plugin(s) ---
+      # - name: Install and Build Theme
+      #   working-directory: wp-content/themes/paychex
+      #   run: |
+      #     rm -rf public
+      #     npm ci
+      #     npm run build
+
+      # - name: Install and Build Plugin
+      #   working-directory: wp-content/plugins/paychex-blocks
+      #   run: |
+      #     rm -rf build
+      #     npm ci
+      #     npm run build
+
+      - name: Prepare deploy artifact (only the WP parts you control)
+        run: |
+          THEME_NAME=masterofmagic
+          # PLUGIN_NAME=masterofmagic-blocks
+
+          mkdir -p artifact/wp-content/themes/$THEME_NAME
+          # mkdir -p artifact/wp-content/plugins/$PLUGIN_NAME
+
+          rsync -av wp-content/themes/$THEME_NAME/ artifact/wp-content/themes/$THEME_NAME \
+            --exclude=node_modules \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=.gitignore \
+            --exclude=.prettierrc \
+            --exclude=package.json \
+            --exclude=package-lock.json \
+            --exclude=webpack.config.js \
+            --exclude=phpcs.xml \
+            --exclude=composer.json \
+            --exclude=composer.lock \
+            --exclude=resources
+
+          # rsync -av wp-content/plugins/$PLUGIN_NAME/ artifact/wp-content/plugins/$PLUGIN_NAME \
+          #   --exclude=node_modules --exclude=.git --exclude=.github --exclude=.gitignore \
+          #   --exclude=package.json --exclude=package-lock.json --exclude=webpack.config.js \
+          #   --exclude=phpcs.xml --exclude=composer.* --exclude=README.md --exclude=src
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          # Preload host key to avoid interactive prompt
+          ssh-keyscan -p ${{ secrets.NORDICWAY_PORT }} ${{ secrets.NORDICWAY_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Nordicway staging via rsync over SSH
+        env:
+          HOST: ${{ secrets.NORDICWAY_HOST }}
+          USER: ${{ secrets.NORDICWAY_USER }}
+          PORT: ${{ secrets.NORDICWAY_PORT }}
+          DEST: ${{ secrets.NORDICWAY_DEST_PATH_STAGING }}
+        run: |
+          # confirm destination
+          echo "Deploying to $USER@$HOST:$DEST"
+
+          # sync only the artifact (theme/plugins) into the staging docroot
+          # --delete keeps remote in sync (remove files that were removed locally)
+          RSYNC_RSH="ssh -p $PORT" rsync -az --delete artifact/wp-content/ "$USER@$HOST:$DEST/wp-content/"
+
+      - name: Post-deploy sanity check (optional)
+        env:
+          HOST: ${{ secrets.NORDICWAY_HOST }}
+          USER: ${{ secrets.NORDICWAY_USER }}
+          PORT: ${{ secrets.NORDICWAY_PORT }}
+          DEST: ${{ secrets.NORDICWAY_DEST_PATH_STAGING }}
+        run: |
+          ssh -p $PORT $USER@$HOST "whoami && ls -lah $DEST/wp-content/themes && php -v || true"

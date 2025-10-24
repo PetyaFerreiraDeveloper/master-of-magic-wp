@@ -14,13 +14,13 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy to'
+        description: "Environment to deploy to"
         required: true
-        default: 'staging'
+        default: "staging"
         type: choice
         options: [staging, production]
       ref:
-        description: 'Branch, tag, or SHA to deploy (empty = default branch)'
+        description: "Branch, tag, or SHA to deploy (empty = default branch)"
         required: false
         type: string
 
@@ -66,63 +66,58 @@ jobs:
             --exclude='upgrade/**' \
             --exclude='cache/**' \
             --exclude='wflogs/**' \
+            --exclude='*.map' \
             --exclude='**/node_modules/**' \
             --exclude='**/.git/**' \
             --exclude='**/.github/**' \
             --exclude='**/.gitignore' \
-            --exclude='**/package*.json' \
             --exclude='**/composer.*' \
+            --exclude='**/package*.json' \
             --exclude='**/webpack.*' \
             --exclude='**/vite.*' \
             --exclude='**/resources/**' \
             --exclude='**/README.md'
 
-      # Ensure destination exists and create a writable per-user tmp dir for appleboy/scp-action
-      - name: Preflight (ensure paths exist)
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.NORDICWAY_SSH_HOST }}
-          username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
-          key: ${{ secrets.NORDICWAY_SSH_KEY }}
-          port: ${{ secrets.NORDICWAY_SSH_PORT }}
-          script_stop: true
-          script: |
-            set -e
-            echo "Ensuring destination path exists…"
-            mkdir -p "${{ secrets.NORDICWAY_DEST_PATH }}"
-            echo "Creating per-user tmp dir…"
-            mkdir -p "/home/${USER}/tmp" || mkdir -p "$HOME/tmp"
-            echo "tar version:"
-            which tar && tar --version
+      - name: Write SSH key & known_hosts
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.NORDICWAY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ secrets.NORDICWAY_SSH_PORT }} ${{ secrets.NORDICWAY_SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
-      - name: Upload wp-content via SCP (SSH key)
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.NORDICWAY_SSH_HOST }}
-          username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
-          key: ${{ secrets.NORDICWAY_SSH_KEY }}
-          port: ${{ secrets.NORDICWAY_SSH_PORT }}
-          # copy the contents of artifact/wp-content into the remote wp-content
-          source: "artifact/wp-content/*"
-          target: "${{ secrets.NORDICWAY_DEST_PATH }}/"
-          overwrite: true
-          # avoid /tmp noexec by forcing a home-based tmp directory
-          tar_tmp_path: "/home/${{ secrets.NORDICWAY_SSH_USERNAME }}/tmp"
+      - name: Preflight (ensure destination exists)
+        shell: bash
+        run: |
+          ssh -i ~/.ssh/deploy_key -p ${{ secrets.NORDICWAY_SSH_PORT }} \
+            ${{ secrets.NORDICWAY_SSH_USERNAME }}@${{ secrets.NORDICWAY_SSH_HOST }} \
+            "mkdir -p '${{ secrets.NORDICWAY_DEST_PATH }}' && ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}' || true"
+
+      - name: Deploy wp-content via rsync over SSH (preserve uploads)
+        env:
+          HOST: ${{ secrets.NORDICWAY_SSH_HOST }}
+          USER: ${{ secrets.NORDICWAY_SSH_USERNAME }}
+          PORT: ${{ secrets.NORDICWAY_SSH_PORT }}
+          DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
+        shell: bash
+        run: |
+          RSYNC_RSH="ssh -i ~/.ssh/deploy_key -p $PORT -o StrictHostKeyChecking=yes"
+          # --delete keeps themes/plugins in sync BUT excludes protect uploads etc.
+          rsync -az --delete \
+            --exclude='uploads/**' \
+            --exclude='upgrade/**' \
+            --exclude='cache/**' \
+            --exclude='wflogs/**' \
+            artifact/wp-content/ "$USER@$HOST:$DEST/"
 
       - name: Post-deploy sanity check
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.NORDICWAY_SSH_HOST }}
-          username: ${{ secrets.NORDICWAY_SSH_USERNAME }}
-          key: ${{ secrets.NORDICWAY_SSH_KEY }}
-          port: ${{ secrets.NORDICWAY_SSH_PORT }}
-          script_stop: true
-          script: |
-            echo "✅ Deployment completed on Nordicway (${{ inputs.environment }})"
-            echo "--- wp-content ---"
-            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}" || true
-            echo "--- themes ---"
-            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}/themes" || true
-            echo "--- plugins ---"
-            ls -lah "${{ secrets.NORDICWAY_DEST_PATH }}/plugins" || true
-            php -v || true
+        shell: bash
+        run: |
+          ssh -i ~/.ssh/deploy_key -p ${{ secrets.NORDICWAY_SSH_PORT }} \
+            ${{ secrets.NORDICWAY_SSH_USERNAME }}@${{ secrets.NORDICWAY_SSH_HOST }} \
+            "echo '✅ Deployed to ${{ inputs.environment }}';
+             echo '--- wp-content ---'; ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}';
+             echo '--- themes ---';    ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/themes' || true;
+             echo '--- plugins ---';   ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/plugins' || true;
+             php -v || true"

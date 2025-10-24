@@ -102,13 +102,14 @@ jobs:
           DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
         shell: bash
         run: |
-          RSYNC_RSH="ssh -i ~/.ssh/deploy_key -p $PORT -o StrictHostKeyChecking=yes"
-          # --delete keeps themes/plugins in sync BUT excludes protect uploads etc.
+          set -e
+          echo "Using SSH port: $PORT"
           rsync -az --delete \
             --exclude='uploads/**' \
             --exclude='upgrade/**' \
             --exclude='cache/**' \
             --exclude='wflogs/**' \
+            -e "ssh -i ~/.ssh/deploy_key -p $PORT -o StrictHostKeyChecking=yes" \
             artifact/wp-content/ "$USER@$HOST:$DEST/"
 
       - name: Post-deploy sanity check

@@ -46,27 +46,25 @@ jobs:
           node-version: "20"
 
       # --- OPTIONAL: build steps for your theme/plugin(s) ---
-      # - name: Build Theme
+      # - name: Build Theme (example)
       #   working-directory: wp-content/themes/masterofmagic
       #   run: |
       #     npm ci
       #     npm run build
       #
-      # - name: Build Plugin
+      # - name: Build Plugin (example)
       #   working-directory: wp-content/plugins/masterofmagic-blocks
       #   run: |
       #     npm ci
       #     npm run build
 
-      - name: Prepare deploy artifact (whole wp-content minus uploads/runtime/dev junk)
+      - name: Prepare deploy artifact (only the parts you control)
         run: |
-          mkdir -p artifact/wp-content
-          rsync -av wp-content/ artifact/wp-content \
-            --exclude='uploads/**' \
-            --exclude='upgrade/**' \
-            --exclude='cache/**' \
-            --exclude='wflogs/**' \
-            --exclude='*.map' \
+          mkdir -p artifact/wp-content/themes
+          mkdir -p artifact/wp-content/plugins
+
+          # copy all themes you maintain
+          rsync -av wp-content/themes/ artifact/wp-content/themes \
             --exclude='**/node_modules/**' \
             --exclude='**/.git/**' \
             --exclude='**/.github/**' \
@@ -78,6 +76,21 @@ jobs:
             --exclude='**/resources/**' \
             --exclude='**/README.md'
 
+          # copy all plugins you maintain (if any)
+          if [ -d "wp-content/plugins" ]; then
+            rsync -av wp-content/plugins/ artifact/wp-content/plugins \
+              --exclude='**/node_modules/**' \
+              --exclude='**/.git/**' \
+              --exclude='**/.github/**' \
+              --exclude='**/.gitignore' \
+              --exclude='**/composer.*' \
+              --exclude='**/package*.json' \
+              --exclude='**/webpack.*' \
+              --exclude='**/vite.*' \
+              --exclude='**/resources/**' \
+              --exclude='**/README.md'
+          fi
+
       - name: Write SSH key & known_hosts
         shell: bash
         run: |
@@ -87,14 +100,15 @@ jobs:
           ssh-keyscan -p ${{ secrets.NORDICWAY_SSH_PORT }} ${{ secrets.NORDICWAY_SSH_HOST }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Preflight (ensure destination exists)
+      - name: Preflight (ensure destination subfolders exist)
         shell: bash
         run: |
           ssh -i ~/.ssh/deploy_key -p ${{ secrets.NORDICWAY_SSH_PORT }} \
             ${{ secrets.NORDICWAY_SSH_USERNAME }}@${{ secrets.NORDICWAY_SSH_HOST }} \
-            "mkdir -p '${{ secrets.NORDICWAY_DEST_PATH }}' && ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}' || true"
+            "mkdir -p '${{ secrets.NORDICWAY_DEST_PATH }}/themes' '${{ secrets.NORDICWAY_DEST_PATH }}/plugins' && \
+             ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}'"
 
-      - name: Deploy wp-content via rsync over SSH (preserve uploads)
+      - name: Deploy THEMES via rsync (clean)
         env:
           HOST: ${{ secrets.NORDICWAY_SSH_HOST }}
           USER: ${{ secrets.NORDICWAY_SSH_USERNAME }}
@@ -102,15 +116,29 @@ jobs:
           DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
         shell: bash
         run: |
-          set -e
-          echo "Using SSH port: $PORT"
-          rsync -az --delete \
-            --exclude='uploads/**' \
-            --exclude='upgrade/**' \
-            --exclude='cache/**' \
-            --exclude='wflogs/**' \
-            -e "ssh -i ~/.ssh/deploy_key -p $PORT -o StrictHostKeyChecking=yes" \
-            artifact/wp-content/ "$USER@$HOST:$DEST/"
+          if [ -d "artifact/wp-content/themes" ]; then
+            rsync -az --delete \
+              -e "ssh -i ~/.ssh/deploy_key -p $PORT -o StrictHostKeyChecking=yes" \
+              artifact/wp-content/themes/ "$USER@$HOST:$DEST/themes/"
+          else
+            echo "No themes to deploy."
+          fi
+
+      - name: Deploy PLUGINS via rsync (clean)
+        env:
+          HOST: ${{ secrets.NORDICWAY_SSH_HOST }}
+          USER: ${{ secrets.NORDICWAY_SSH_USERNAME }}
+          PORT: ${{ secrets.NORDICWAY_SSH_PORT }}
+          DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
+        shell: bash
+        run: |
+          if [ -d "artifact/wp-content/plugins" ] && [ "$(ls -A artifact/wp-content/plugins)" ]; then
+            rsync -az --delete \
+              -e "ssh -i ~/.ssh/deploy_key -p $PORT -o StrictHostKeyChecking=yes" \
+              artifact/wp-content/plugins/ "$USER@$HOST:$DEST/plugins/"
+          else
+            echo "No plugins to deploy."
+          fi
 
       - name: Post-deploy sanity check
         shell: bash
@@ -118,7 +146,6 @@ jobs:
           ssh -i ~/.ssh/deploy_key -p ${{ secrets.NORDICWAY_SSH_PORT }} \
             ${{ secrets.NORDICWAY_SSH_USERNAME }}@${{ secrets.NORDICWAY_SSH_HOST }} \
             "echo '✅ Deployed to ${{ inputs.environment }}';
-             echo '--- wp-content ---'; ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}';
-             echo '--- themes ---';    ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/themes' || true;
-             echo '--- plugins ---';   ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/plugins' || true;
+             echo '--- themes ---';  ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/themes' || true;
+             echo '--- plugins ---'; ls -lah '${{ secrets.NORDICWAY_DEST_PATH }}/plugins' || true;
              php -v || true"

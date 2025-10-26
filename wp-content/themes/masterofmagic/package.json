@@ -1,0 +1,16 @@
+{
+    "name": "masterofmagic",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "wp-scripts start --webpack-src-dir=resources --output-path=public",
+        "build": "wp-scripts build --webpack-src-dir=resources --output-path=public"
+    },
+    "keywords": [],
+    "author": "petya ferreira",
+    "license": "ISC",
+    "dependencies": {
+        "@wordpress/scripts": "^30.26.0"
+    }
+}

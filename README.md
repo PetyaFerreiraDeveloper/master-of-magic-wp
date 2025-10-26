@@ -77,11 +77,12 @@ To search and replace URLs in the database, run the following command:
 This will update the database with the new URLs.
 
 ### 3. Install dependencies for composer and npm
+
 To install npm dependencies run:
-```npm i```
+`npm i`
 
 To install composer dependencies run:
-```composer install``` 
+`composer install`
 This will automatically configure git pre-commit hooks.
 
 ## 📦 Build Theme and Plugins
@@ -111,10 +112,10 @@ This project is configured to use **Prettier** for consistent code formatting ac
 
 ### HTML inside PHP files Code Formatting with Prettier
 
-In order to format the html inside php files, make sure that your php file has this comment in the comment section on the top: 
-```@formatter Prettier```
+In order to format the html inside php files, make sure that your php file has this comment in the comment section on the top:
+`@formatter Prettier`
 
-When this comment is added in the php file, run ```composer run format path/to/file.php``` to format the file. 
+When this comment is added in the php file, run `composer run format path/to/file.php` to format the file.
 If you want the format automatically on save install extension (Run On Save)[https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave].
 
 ### PHP Coding Standards

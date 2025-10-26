@@ -1,0 +1,15 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "This repository provides a local development instructions for the **Master of Magic WordPress theme and plugins** using Docker. The setup is based on the [WordPress Dev Setup](https://github.com/PetyaFerreiraDeveloper/wordpress-docker-setup) created by Zarko Djuric.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Petya Ferreira",
+  "license": "ISC",
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
+}

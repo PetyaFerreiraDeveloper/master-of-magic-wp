@@ -71,7 +71,7 @@ To import the database, run the following command:
 To search and replace URLs in the database, run the following command:
 
 ```bash
-/wp.sh search-replace 'https://masterofmagic.dk' 'http://localhost'
+./wp.sh search-replace 'https://masterofmagic.dk' 'http://localhost'
 ```
 
 This will update the database with the new URLs.
@@ -133,7 +133,7 @@ Replace `your-file.php` with the path to the PHP file you want to check. You can
 To run PHP_CodeSniffer on the entire theme, use:
 
 ```bash
-composer run phpcs .
+composer run phpcs
 ```
 
 It's also possible to automatically fix some of the coding standard violations using PHP Code Beautifier and Fixer (phpcbf). To do this, use the following command:
@@ -143,6 +143,13 @@ composer run phpcbf your-file.php
 ```
 
 Replace `your-file.php` with the path to the PHP file you want to fix. You can also run it on multiple files or directories as needed.
+
+To run PHP Code Beautifier and Fixer on the entire theme and plugin, use:
+
+```bash
+composer run phpcbf
+```
+
 
 ## 🧪+🚀 Deploying to Staging or Production
 

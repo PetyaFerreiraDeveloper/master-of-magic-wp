@@ -1,7 +1,7 @@
 <?php
 /**
  * Title: 404 Page
- * Slug: masterofmagic/template-page-404
+ * Slug: masterofmagic-theme/template-page-404
  * Description: The page that shows when no other page is found.
  * Categories: masterofmagic-theme/pages
  * Keywords: page, full-width

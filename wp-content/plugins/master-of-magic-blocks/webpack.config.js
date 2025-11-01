@@ -16,6 +16,7 @@ const newDefaultConfig = defaultConfig.map((config) => {
                     from: '**/*.svg',
                     context: path.resolve(__dirname, 'src'),
                     to: path.resolve(__dirname, 'build'),
+                    noErrorOnMissing: true,
                 },
             ],
         }),

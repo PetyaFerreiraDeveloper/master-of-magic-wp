@@ -1,15 +1,15 @@
 <?php
 /**
  * Title: 404 Page
- * Slug: masterofmagic-theme/template-page-404
+ * Slug: master-of-magic-theme/template-page-404
  * Description: The page that shows when no other page is found.
- * Categories: masterofmagic-theme/pages
+ * Categories: master-of-magic-theme/pages
  * Keywords: page, full-width
  *
  * @formatter Prettier
  * Inserter: false
  *
- * @package masterofmagic-theme
+ * @package master-of-magic-theme
  */
 
 ?>
@@ -19,7 +19,7 @@
 	<div class="wp-block-group">
 	<!-- wp:heading {"level":1} -->
 	<h1 class="wp-block-heading">
-		<?php esc_html_e( '404 - Page Not Found', 'masterofmagic-theme' ); ?>
+		<?php esc_html_e( '404 - Page Not Found', 'master-of-magic-theme' ); ?>
 	</h1>
 	<!-- /wp:heading -->
 
@@ -29,7 +29,7 @@
 		esc_html_e(
 			"The page you are looking for doesn't exist, or it has
       been moved.",
-			'masterofmagic-theme'
+			'master-of-magic-theme'
 		);
 		?>
 	</p>

@@ -1,15 +1,15 @@
 <?php
 /**
  * Title: Page
- * Slug: masterofmagic-theme/template-page-with-title
+ * Slug: master-of-magic-theme/template-page-with-title
  * Description: The page that shows when a general page with title is created.
- * Categories: masterofmagic-theme/pages
+ * Categories: master-of-magic-theme/pages
  * Keywords: page, full-width
  *
  * @formatter Prettier
  * Inserter: false
  *
- * @package masterofmagic-theme
+ * @package master-of-magic-theme
  */
 
 ?>

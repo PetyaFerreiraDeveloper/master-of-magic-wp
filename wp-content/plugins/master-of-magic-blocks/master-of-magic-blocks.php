@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Master Of Magic Blocks
- * Plugin URI:        https://abtion.com
+ * Plugin URI:        https://masterofmagic.com
  * Description:       Master Of Magic blocks is a collection of custom blocks designed to extend the WordPress editor. This plugin also includes various functionality related to Master Of Magic project.
  * Version:           1.0.0
  * Requires at least: 6.7

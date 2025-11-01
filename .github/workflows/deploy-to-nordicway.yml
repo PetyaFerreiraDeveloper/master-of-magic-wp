@@ -9,19 +9,19 @@ on:
       ref:
         required: false
         type: string
-        default: ""
+        default: ''
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to deploy to"
+        description: 'Environment to deploy to'
         required: true
-        default: "staging"
+        default: 'staging'
         type: choice
         options:
           - staging
           - production
       ref:
-        description: "Branch, tag, or SHA to deploy (empty = default branch)"
+        description: 'Branch, tag, or SHA to deploy (empty = default branch)'
         required: false
         type: string
 
@@ -40,10 +40,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
 
       # - name: Install and Build Theme
-      #   working-directory: wp-content/themes/masterofmagic
+      #   working-directory: wp-content/themes/master-of-magic-theme
       #   run: |
       #     rm -rf public
       #     npm install
@@ -58,7 +58,7 @@ jobs:
 
       - name: Prepare Nordicway Structure (Exclude Unwanted Files)
         run: |
-          THEME_NAME=masterofmagic
+          THEME_NAME=master-of-magic-theme
           # PLUGIN_NAME=masterofmagic-blocks
 
           mkdir -p nordicway/wp-content/themes/$THEME_NAME
@@ -122,7 +122,7 @@ jobs:
         run: |
           echo "Deploying theme to $USER@$HOST:$DEST"
 
-          scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/themes/masterofmagic \
+          scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/themes/master-of-magic-theme \
             "$USER@$HOST:$DEST/themes/"
 
           # scp -i ~/.ssh/deploy_key -P "$PORT" -r nordicway/wp-content/plugins/masterofmagic-blocks \

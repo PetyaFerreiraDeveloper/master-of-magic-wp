@@ -1,15 +1,15 @@
 <?php
 /**
  * Title: Index Page
- * Slug: masterofmagic-theme/template-page-index
+ * Slug: master-of-magic-theme/template-page-index
  * Description: The main index page template.
- * Categories: masterofmagic-theme/pages
+ * Categories: master-of-magic-theme/pages
  * Keywords: page, full-width
  *
  * @formatter Prettier
  * Inserter: false
  *
- * @package masterofmagic-theme
+ * @package master-of-magic-theme
  */
 
 ?>
@@ -23,7 +23,7 @@
 		<?php
 		esc_html_e(
 			'Index page to test deployment',
-			'masterofmagic-theme'
+			'master-of-magic-theme'
 		);
 		?>
 	</p>

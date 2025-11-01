@@ -8,11 +8,11 @@
 /wp-content/plugins/*
 
 # Allow only specific theme and plugin
-!/wp-content/themes/masterofmagic/
-!/wp-content/themes/masterofmagic/**
+!/wp-content/themes/master-of-magic-theme/
+!/wp-content/themes/master-of-magic-theme/**
 
-!/wp-content/plugins/masterofmagic-blocks/
-!/wp-content/plugins/masterofmagic-blocks/**
+!/wp-content/plugins/master-of-magic-blocks/
+!/wp-content/plugins/master-of-magic-blocks/**
 
 # Ignore vendor and node_modules directories
 /vendor/

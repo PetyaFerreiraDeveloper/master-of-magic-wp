@@ -5,8 +5,8 @@
     <rule ref="WordPress.WP.I18n">
         <properties>
             <property name="text_domain" type="array">
-                <element value="masterofmagic-theme"/>
-                <element value="masterofmagic-blocks"/>
+                <element value="master-of-magic-theme"/>
+                <element value="master-of-magic-blocks"/>
             </property>
         </properties>
     </rule>
@@ -30,7 +30,8 @@
     <arg name="extensions" value="php"/>
     
     <!-- Only check specific directories (your theme and plugin) -->
-    <file>wp-content/themes/masterofmagic</file>
+    <file>wp-content/themes/master-of-magic-theme</file>
+    <file>wp-content/plugins/master-of-magic-blocks</file>
 
     <!-- Show sniff codes in all reports -->
     <arg value="sp"/>

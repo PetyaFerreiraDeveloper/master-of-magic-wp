@@ -124,16 +124,23 @@ jobs:
           DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
         run: |
           echo "Deploying theme and plugin to $USER@$HOST:$DEST"
-
           scp -i ~/.ssh/deploy_key -P "$PORT" -r "nordicway/wp-content/themes/$THEME_NAME" \
             "$USER@$HOST:$DEST/themes/"
-
           scp -i ~/.ssh/deploy_key -P "$PORT" -r "nordicway/wp-content/plugins/$PLUGIN_NAME" \
             "$USER@$HOST:$DEST/plugins/"
-
           echo "✅ Deployment finished to ${{ inputs.environment }}"
 
       - name: Post-deploy sanity check
+        env:
+          HOST: ${{ secrets.NORDICWAY_SSH_HOST }}
+          USER: ${{ secrets.NORDICWAY_SSH_USERNAME }}
+          PORT: ${{ secrets.NORDICWAY_SSH_PORT }}
+          DEST: ${{ secrets.NORDICWAY_DEST_PATH }}
         run: |
-          ssh -i ~/.ssh/deploy_key -p ${{ secrets.NORDICWAY_SSH_PORT }} \
-            ${{ secrets.NORDICWAY_SSH_USERNAME }}
+          # -T avoids the "Pseudo-terminal will not be allocated" warning
+          ssh -T -i ~/.ssh/deploy_key -p "$PORT" -o StrictHostKeyChecking=yes "$USER@$HOST" <<'SSHCMDS'
+            echo '--- Themes ---'
+            ls -lah "${DEST}/themes" || true
+            echo '--- Plugins ---'
+            ls -lah "${DEST}/plugins" || true
+          SSHCMDS

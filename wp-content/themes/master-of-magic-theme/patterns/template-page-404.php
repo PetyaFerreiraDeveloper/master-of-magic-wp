@@ -13,8 +13,8 @@
  */
 
 ?>
-<!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group">
+<!-- wp:group {"style":{"dimensions":{"minHeight":"100vh"}},"layout":{"type":"flex","orientation":"vertical","verticalAlignment":"center","justifyContent":"center"}} -->
+<div class="wp-block-group" style="min-height:100vh">
 	<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
 	<div class="wp-block-group">
 	<!-- wp:heading {"level":1} -->

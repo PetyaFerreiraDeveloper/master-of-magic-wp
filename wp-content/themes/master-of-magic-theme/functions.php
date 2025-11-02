@@ -55,7 +55,7 @@ add_action( 'wp_enqueue_scripts', 'master_of_magic_theme_enqueue_assets' );
  *
  * @return void
  */
-function master_of_magic_theme_editor_assets() {
+function master_of_magic_theme_enqueue_editor_assets() {
 	$script_asset = include get_theme_file_path( 'public/js/editor.asset.php' );
 	$style_asset  = include get_theme_file_path( 'public/css/editor.asset.php' );
 
@@ -74,4 +74,4 @@ function master_of_magic_theme_editor_assets() {
 		! empty( $style_asset['version'] ) ? $style_asset['version'] : null
 	);
 }
-add_action( 'enqueue_block_editor_assets', 'master_of_magic_theme_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'master_of_magic_theme_enqueue_editor_assets' );

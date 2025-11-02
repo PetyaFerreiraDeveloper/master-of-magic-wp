@@ -1,1 +1,0 @@
-console.log('Master of Magic Blocks index.js loaded');

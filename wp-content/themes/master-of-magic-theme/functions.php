@@ -18,6 +18,8 @@ function master_of_magic_theme_setup() {
 
 	// Add other theme supports here as needed.
 	// add_theme_support( 'post-thumbnails' );.
+	add_theme_support( 'editor-styles' );
+	add_editor_style( 'public/css/editor.css' );
 }
 add_action( 'after_setup_theme', 'master_of_magic_theme_setup' );
 
@@ -57,7 +59,6 @@ add_action( 'wp_enqueue_scripts', 'master_of_magic_theme_enqueue_assets' );
  */
 function master_of_magic_theme_enqueue_editor_assets() {
 	$script_asset = include get_theme_file_path( 'public/js/editor.asset.php' );
-	$style_asset  = include get_theme_file_path( 'public/css/editor.asset.php' );
 
 	wp_enqueue_script(
 		'master-of-magic-theme-editor-script',
@@ -65,13 +66,6 @@ function master_of_magic_theme_enqueue_editor_assets() {
 		! empty( $script_asset['dependencies'] ) ? $script_asset['dependencies'] : [],
 		! empty( $script_asset['version'] ) ? $script_asset['version'] : null,
 		true
-	);
-
-	wp_enqueue_style(
-		'master-of-magic-theme-editor-style',
-		get_theme_file_uri( 'public/css/editor.css' ),
-		! empty( $style_asset['dependencies'] ) ? $style_asset['dependencies'] : [],
-		! empty( $style_asset['version'] ) ? $style_asset['version'] : null
 	);
 }
 add_action( 'enqueue_block_editor_assets', 'master_of_magic_theme_enqueue_editor_assets' );

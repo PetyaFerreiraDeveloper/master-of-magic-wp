@@ -4,6 +4,11 @@ A custom WordPress blocks plugin designed to work alongside the main theme. This
 
 ## 🧱 Features
 
+- Blocks use for master of magic project
+- Optimized for performance and speed
+- Responsive design for all devices
+- Accessibility-ready
+
 ## 🛠 Requirements
 
 - [Node.js](https://nodejs.org/) (LTS recommended)
@@ -11,6 +16,12 @@ A custom WordPress blocks plugin designed to work alongside the main theme. This
 ---
 
 ## 🚀 Getting Started
+
+### 1. Navigate to the plugin directory
+
+```bash
+cd master-of-magic-blocks
+```
 
 ### 1. Install js dependencies
 

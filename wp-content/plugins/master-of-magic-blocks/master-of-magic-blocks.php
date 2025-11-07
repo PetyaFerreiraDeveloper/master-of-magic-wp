@@ -36,34 +36,19 @@ add_action( 'plugins_loaded', 'master_of_magic_blocks_load_textdomain' );
 /**
  * Registers multiple block types from metadata loaded from a file.
  */
-add_action(
-	'init',
-	function () {
-		// Primary: register built blocks (what CI/CD deploys).
-		$build_dir = plugin_dir_path( __FILE__ ) . 'build/blocks';
+function master_of_magic_blocks_register_blocks() {
+	// Primary: register built blocks (what CI/CD deploys).
+	$build_dir = MASTER_OF_MAGIC_BLOCKS_PATH . 'build/blocks';
 
-		// Fallback for local dev if build is missing: read from src.
-		$src_dir = plugin_dir_path( __FILE__ ) . 'src/blocks';
-
-		$roots = [];
-		if ( is_dir( $build_dir ) ) {
-			$roots[] = $build_dir;
-		} elseif ( is_dir( $src_dir ) ) {
-			// useful when running `wp-scripts start` locally.
-			$roots[] = $src_dir;
-		} else {
-			return;
-		}
-
-		foreach ( $roots as $root ) {
-			$files = glob( trailingslashit( $root ) . '*/block.json', GLOB_NOSORT );
-			if ( ! $files ) {
-				continue;
-			}
-			foreach ( $files as $block_json ) {
-				// `register_block_type()` accepts a directory containing block.json.
-				register_block_type( dirname( $block_json ) );
-			}
-		}
+	if ( ! file_exists( $build_dir ) ) {
+		return;
 	}
-);
+
+	$block_json_files = glob( $build_dir . '/*/block.json' );
+
+	foreach ( $block_json_files as $block_json_file ) {
+		register_block_type( dirname( $block_json_file ) );
+	}
+}
+
+add_action( 'init', 'master_of_magic_blocks_register_blocks' );

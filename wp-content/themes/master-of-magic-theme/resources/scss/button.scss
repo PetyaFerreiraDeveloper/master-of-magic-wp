@@ -1,0 +1,26 @@
+.is-style-button-icon-size-small {
+  --icon-size: 16px;
+}
+
+.is-style-button-icon-size-medium {
+  --icon-size: 20px;
+}
+
+.is-style-button-icon-size-large {
+  --icon-size: 24px;
+}
+
+.is-style-button-type-primary-dark {
+  .wp-block-button__link {
+    background-color: var(--wp--preset--color--primary-dark);
+    border: 1px solid var(--wp--preset--color--primary-dark);
+  }
+}
+
+.is-style-button-type-primary-white {
+  .wp-block-button__link {
+    background-color: white;
+    border: 1px solid var(--wp--preset--color--primary-dark);
+    color: var(--wp--preset--color--primary-dark);
+  }
+}

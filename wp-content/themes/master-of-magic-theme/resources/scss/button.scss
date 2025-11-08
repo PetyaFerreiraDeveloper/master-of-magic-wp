@@ -1,3 +1,7 @@
+.wp-block-button__link {
+  line-height: 1;
+}
+
 .is-style-button-icon-size-small {
   --icon-size: 16px;
 }
@@ -22,5 +26,242 @@
     background-color: white;
     border: 1px solid var(--wp--preset--color--primary-dark);
     color: var(--wp--preset--color--primary-dark);
+  }
+}
+
+.is-style-button-type-invisible {
+  .wp-block-button__link {
+    background-color: transparent;
+    border: none;
+    color: transparent;
+    box-shadow: none;
+  }
+}
+
+.is-style-button-type-text-and-icon {
+  .wp-block-button__link {
+    background-color: transparent;
+    color: var(--wp--preset--color--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: fit-content;
+  }
+}
+
+.is-style-button-size-m {
+  .wp-block-button__link {
+    padding: calc(var(--wp--preset--spacing--small) - 4px)
+      calc(var(--wp--preset--spacing--small) * 2);
+    font-size: var(--wp--preset--font-size--small);
+    font-weight: 400;
+  }
+}
+
+.is-style-button-size-l {
+  .wp-block-button__link {
+    padding: var(--wp--preset--spacing--small)
+      calc(var(--wp--preset--spacing--small) * 2);
+    font-size: var(--wp--preset--font-size--regular);
+    font-weight: 400;
+  }
+}
+
+.is-style-button-icon-right {
+  &.is-style-button-size-l.is-style-button-has-text-false {
+    .wp-block-button__link {
+      border-radius: 24px;
+      padding: 7px;
+      font-size: 0;
+      gap: 0;
+      border-color: inherit;
+    }
+  }
+
+  &.is-style-button-size-m.is-style-button-has-text-false {
+    .wp-block-button__link {
+      border-radius: 24px;
+      padding: 3px;
+      font-size: 0;
+      gap: 0;
+      border-color: inherit;
+    }
+  }
+
+  .wp-block-button__link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: fit-content;
+
+    // Only show icon when custom icon is provided
+    &[style*='--custom-icon-url'] {
+      &::after {
+        content: '';
+        display: inline-block;
+        width: var(--icon-size, 1rem);
+        height: var(--icon-size, 1rem);
+        line-height: 1;
+        background-color: currentColor;
+        mask: var(--custom-icon-url) no-repeat center;
+        -webkit-mask: var(--custom-icon-url) no-repeat center;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+      }
+
+      // For raster images (PNG, JPG), use background-image instead of mask
+      &[data-icon-raster='true']::after {
+        background: var(--custom-icon-url) no-repeat center;
+        background-size: contain;
+        mask: none;
+        -webkit-mask: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  // Icon mode: preserve original colors (use background-image instead of mask)
+  &.is-style-button-icon-mode-preserve .wp-block-button__link {
+    &[style*='--custom-icon-url'] {
+      &::after {
+        background: var(--custom-icon-url) no-repeat center;
+        background-size: contain;
+        mask: none;
+        -webkit-mask: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  // Also check for custom icon on the block wrapper (for editor)
+  &[style*='--custom-icon-url'] .wp-block-button__link::after {
+    content: '';
+    display: inline-block;
+    width: var(--icon-size, 1rem);
+    height: var(--icon-size, 1rem);
+    line-height: 1;
+    background-color: currentColor;
+    mask: var(--custom-icon-url) no-repeat center;
+    -webkit-mask: var(--custom-icon-url) no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+  }
+
+  // For raster images on block wrapper
+  &[data-icon-raster='true'] .wp-block-button__link::after {
+    background: var(--custom-icon-url) no-repeat center;
+    background-size: contain;
+    mask: none;
+    -webkit-mask: none;
+  }
+
+  // Icon mode: preserve original colors (for editor)
+  &.is-style-button-icon-mode-preserve[style*='--custom-icon-url']
+    .wp-block-button__link::after {
+    background: var(--custom-icon-url) no-repeat center;
+    background-size: contain;
+    mask: none;
+    -webkit-mask: none;
+    background-color: transparent;
+  }
+}
+
+.is-style-button-icon-left {
+  &.is-style-button-size-l.is-style-button-has-text-false {
+    .wp-block-button__link {
+      border-radius: 24px;
+      padding: 7px;
+      font-size: 0;
+      gap: 0;
+      border-color: inherit;
+    }
+  }
+
+  &.is-style-button-size-m.is-style-button-has-text-false {
+    .wp-block-button__link {
+      border-radius: 24px;
+      padding: 3px;
+      font-size: 0;
+      gap: 0;
+      border-color: inherit;
+    }
+  }
+
+  .wp-block-button__link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: fit-content;
+
+    // Only show icon when custom icon is provided
+    &[style*='--custom-icon-url'] {
+      &::before {
+        content: '';
+        display: inline-block;
+        width: var(--icon-size, 1rem);
+        height: var(--icon-size, 1rem);
+        line-height: 1;
+        background-color: currentColor;
+        mask: var(--custom-icon-url) no-repeat center;
+        -webkit-mask: var(--custom-icon-url) no-repeat center;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+      }
+
+      // For raster images (PNG, JPG), use background-image instead of mask
+      &[data-icon-raster='true']::before {
+        background: var(--custom-icon-url) no-repeat center;
+        background-size: contain;
+        mask: none;
+        -webkit-mask: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  // Icon mode: preserve original colors (use background-image instead of mask)
+  &.is-style-button-icon-mode-preserve .wp-block-button__link {
+    &[style*='--custom-icon-url'] {
+      &::before {
+        background: var(--custom-icon-url) no-repeat center;
+        background-size: contain;
+        mask: none;
+        -webkit-mask: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  // Also check for custom icon on the block wrapper (for editor)
+  &[style*='--custom-icon-url'] .wp-block-button__link::before {
+    content: '';
+    display: inline-block;
+    width: var(--icon-size, 1rem);
+    height: var(--icon-size, 1rem);
+    line-height: 1;
+    background-color: currentColor;
+    mask: var(--custom-icon-url) no-repeat center;
+    -webkit-mask: var(--custom-icon-url) no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+  }
+
+  // For raster images on block wrapper
+  &[data-icon-raster='true'] .wp-block-button__link::before {
+    background: var(--custom-icon-url) no-repeat center;
+    background-size: contain;
+    mask: none;
+    -webkit-mask: none;
+    background-color: transparent;
+  }
+
+  // Icon mode: preserve original colors (for editor)
+  &.is-style-button-icon-mode-preserve[style*='--custom-icon-url']
+    .wp-block-button__link::before {
+    background: var(--custom-icon-url) no-repeat center;
+    background-size: contain;
+    mask: none;
+    -webkit-mask: none;
+    background-color: transparent;
   }
 }

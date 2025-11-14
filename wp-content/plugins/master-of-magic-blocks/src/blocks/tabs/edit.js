@@ -2,7 +2,7 @@
  * Wordpress dependencies
  */
 
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks, RichText } from '@wordpress/block-editor';
 import { withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 
@@ -14,6 +14,17 @@ function Edit({ innerBlocks }) {
   const blockProps = useBlockProps();
   return (
     <div {...blockProps}>
+      <div className="wp-block-master-of-magic-blocks-tabs__navigation">
+        <div className="wp-block-master-of-magic-blocks-tabs__navigation-inner">
+          {innerBlocks.map((block, index) => (
+            <RichText
+              key={index}
+              tagName="div"
+              value={block.attributes.label}
+            />
+          ))}
+        </div>
+      </div>
       <InnerBlocks />
     </div>
   );

@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "master-of-magic-blocks/tab",
+    "title": "Tab",
+    "category": "master-of-magic-blocks",
+    "icon": "media-interactive",
+    "description": "A simple tab with title and content.",
+    "supports": {
+        "interactivity": true
+    },
+    "attributes": {
+        "id": {
+            "type": "string",
+            "default": ""
+        },
+        "label": {
+            "type": "string",
+            "default": "Tab"
+        }
+    },
+    "parent": [
+        "master-of-magic-blocks/tabs"
+    ],
+    "usesContext": [
+        "master-of-magic-blocks/activeTabId"
+    ],
+    "textdomain": "master-of-magic-blocks",
+    "editorScript": "file:./index.js",
+    "style": "file:./style-index.css",
+    "render": "file:./render.php"
+}

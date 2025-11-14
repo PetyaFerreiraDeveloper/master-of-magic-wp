@@ -52,3 +52,18 @@ function master_of_magic_blocks_register_blocks() {
 }
 
 add_action( 'init', 'master_of_magic_blocks_register_blocks' );
+
+/**
+ * Register block category.
+ *
+ * @param array $categories Existing block categories.
+ */
+function master_of_magic_blocks_register_block_category( array $categories ): array {
+	$categories[] = array(
+		'slug'  => 'master-of-magic-blocks',
+		'title' => __( 'Master Of Magic Blocks', 'master-of-magic-blocks' ),
+	);
+	return $categories;
+}
+
+add_filter( 'block_categories_all', 'master_of_magic_blocks_register_block_category' );

@@ -14,7 +14,6 @@
 ?>
 
 <div class="master-of-magic-blocks-tab">
-	<?php
-	echo esc_html__( 'Hello from the front end', 'master-of-magic-blocks' );
-	?>
+  <?php echo esc_html__( 'Hello from master of magic old tab',
+  'master-of-magic-blocks' ); ?>
 </div>

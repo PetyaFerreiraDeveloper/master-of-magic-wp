@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
-    "name": "master-of-magic-blocks/tab",
-    "title": "Tab",
+    "name": "master-of-magic-blocks/tabold",
+    "title": "TabOld",
     "category": "widgets",
     "icon": "index-card",
     "description": "A simple tab with title and content.",

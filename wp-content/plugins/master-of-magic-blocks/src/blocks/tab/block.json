@@ -7,7 +7,12 @@
     "icon": "media-interactive",
     "description": "A simple tab with title and content.",
     "supports": {
-        "interactivity": true
+        "interactivity": true,
+        "align": true,
+        "spacing": {
+            "margin": true,
+            "padding": true
+        }
     },
     "attributes": {
         "id": {

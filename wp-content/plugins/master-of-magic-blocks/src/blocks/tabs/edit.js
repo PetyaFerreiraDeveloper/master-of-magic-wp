@@ -3,7 +3,7 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
+import { Button, Dashicon } from '@wordpress/components';
 import { useBlockProps, InnerBlocks, RichText } from '@wordpress/block-editor';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
@@ -13,7 +13,7 @@ import { useEffect } from '@wordpress/element';
 /**
  * Helper function for generation of unique IDs
  */
-const generateUniqueId = (label, existingIds) => {
+const generateUniqueId = (label = 'tab', existingIds) => {
   let baseId = label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
   let uniqueId = baseId;
@@ -107,9 +107,8 @@ function Edit({
           ))}
           <div className={`${navItemClassName} ${navItemClassName}--add`}>
             <Button
-              variant="tertiary"
+              variant="primary"
               size="small"
-              icon="plus"
               onClick={() => {
                 insertBlock(
                   createBlock('master-of-magic-blocks/tab', {
@@ -120,11 +119,22 @@ function Edit({
                 );
                 selectBlock(clientId);
               }}
-            />
+            >
+              {__('Add tab', 'master-of-magic-blocks')}
+            </Button>
           </div>
         </div>
       </div>
-      <InnerBlocks />
+      <InnerBlocks
+        allowedBlocks={['master-of-magic-blocks/tab']}
+        template={[
+          [
+            'master-of-magic-blocks/tab',
+            { label: __('Tab', 'master-of-magic-blocks') },
+          ],
+        ]}
+        templateLock={false}
+      />
     </div>
   );
 }

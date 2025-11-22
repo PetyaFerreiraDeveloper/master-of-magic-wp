@@ -16,9 +16,37 @@
     cursor: pointer;
     transition: all 0.3s ease;
 
+    position: relative;
+    display: inline-block; // so underline width matches text
+    padding-bottom: 6px; // space for the underline
+
+    // underline (starts at 0 width)
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      height: 2px;
+      width: 100%;
+      background: #2271b1; // WP-ish blue, change if you want
+
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.3s ease;
+    }
+
     &--active {
       opacity: 1;
+
+      &::after {
+        transform: scaleX(1);
+      }
     }
+  }
+
+  &__content {
+    margin-top: 1rem;
   }
 
   &__content-item {
@@ -26,6 +54,16 @@
 
     &--active {
       display: block;
+      animation: mom-tabs-fade-in 1s ease;
     }
+  }
+}
+
+@keyframes mom-tabs-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

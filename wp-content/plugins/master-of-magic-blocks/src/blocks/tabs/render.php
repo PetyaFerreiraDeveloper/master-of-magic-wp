@@ -17,7 +17,7 @@ $block_tabs = [];
 
 foreach ( $block->parsed_block['innerBlocks'] as $innerblockkey => $innerblock ) {
 	$block_tabs[] = [
-		'id'       => $innerblock['attrs']['id'],
+		'id'       => $innerblock['attrs']['id'] ?? '',
 		'label'    => $innerblock['attrs']['label'] ?? __( 'Tab', 'master-of-magic-blocks' ),
 		'isActive' => $innerblockkey === 0,
 	];

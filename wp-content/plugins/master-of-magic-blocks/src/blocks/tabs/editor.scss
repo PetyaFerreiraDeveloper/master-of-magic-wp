@@ -1,0 +1,24 @@
+/* Make tab labels look editable in the editor */
+.wp-block-master-of-magic-blocks-tabs__navigation-item {
+  padding: 6px 10px;
+  border: 1px dashed transparent;
+  border-radius: 6px;
+  cursor: text;
+  background: rgba(0,0,0,0.03);
+  min-width: 40px;
+}
+
+/* hover hint */
+.wp-block-master-of-magic-blocks-tabs__navigation-item:hover {
+  border-color: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.06);
+}
+
+/* when focused/selected for typing */
+.wp-block-master-of-magic-blocks-tabs__navigation-item.is-selected,
+.wp-block-master-of-magic-blocks-tabs__navigation-item:focus-within {
+  border-style: solid;
+  border-color: #2271b1; /* WP blue */
+  background: #fff;
+  box-shadow: 0 0 0 1px #2271b1;
+}

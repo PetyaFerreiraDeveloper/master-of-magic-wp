@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "title": "Fade In",
+    "slug": "fade-in",
+    "blockTypes": [
+        "core/group"
+    ],
+    "styles": {
+        "css": ""
+    }
+}

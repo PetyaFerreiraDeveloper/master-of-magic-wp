@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "title": "Rounded corners",
+  "slug": "rounded-corners",
+  "blockTypes": ["core/image"],
+  "styles": {
+    "border": {
+      "radius": "12px"
+    }
+  }
+}

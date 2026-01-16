@@ -69,3 +69,23 @@ function master_of_magic_theme_enqueue_editor_assets() {
 	);
 }
 add_action( 'enqueue_block_editor_assets', 'master_of_magic_theme_enqueue_editor_assets' );
+
+/**
+ * Create a custom pattern category: Heroes.
+ *
+ * @return void
+ */
+function master_of_magic_theme_register_pattern_categories() {
+
+	if ( ! function_exists( 'register_block_pattern_category' ) ) {
+		return;
+	}
+
+	register_block_pattern_category(
+		'heroes',
+		[
+			'label' => __( 'Hero', 'master-of-magic-theme' ),
+		]
+	);
+}
+add_action( 'init', 'master_of_magic_theme_register_pattern_categories' );

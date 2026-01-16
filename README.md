@@ -90,11 +90,11 @@ This will automatically configure git pre-commit hooks.
 This step is explained in the README files of the theme and plugin directories. Both theme and the plugin assets need to be built with the following commands:
 
 ```bash
-cd src/wp-content/themes/masterofmagic
+cd src/wp-content/themes/master-of-magic-theme
 npm install
 npm run build
 
-cd src/wp-content/plugins/masterofmagic-blocks
+cd src/wp-content/plugins/master-of-magic-blocks
 npm install
 npm run build
 ```

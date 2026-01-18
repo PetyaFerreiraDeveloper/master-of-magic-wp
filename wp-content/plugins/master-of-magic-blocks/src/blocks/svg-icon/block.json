@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "master-of-magic-blocks/svg-icon",
+    "title": "MOM SVG Icon",
+    "category": "design",
+    "icon": "format-image",
+    "description": "Render an SVG inline from the Media Library.",
+    "textdomain": "master-of-magic-blocks",
+
+    "attributes": {
+        "mediaId": {
+            "type": "number",
+            "default": 0
+        },
+        "mediaUrl": {
+            "type": "string",
+            "default": ""
+        }
+    },
+
+    "supports": {
+        "html": false,
+        "color": {
+            "background": true,
+            "text": true
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true
+        }
+    },
+
+    "editorScript": "file:./index.js",
+    "style": "file:./style-index.css",
+    "editorStyle": "file:./index.css",
+    "render": "file:./render.php"
+}

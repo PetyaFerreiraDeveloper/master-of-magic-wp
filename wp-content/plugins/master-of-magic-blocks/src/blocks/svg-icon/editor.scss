@@ -1,0 +1,16 @@
+.mom-svg-icon__inner {
+  display: grid;
+  gap: 10px;
+}
+
+.mom-svg-icon__preview img {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+.mom-svg-icon__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}

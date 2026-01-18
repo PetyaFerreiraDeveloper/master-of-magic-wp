@@ -16,6 +16,13 @@
         "mediaUrl": {
             "type": "string",
             "default": ""
+        },
+        "link": {
+            "type": "object",
+            "default": {
+                "url": "",
+                "opensInNewTab": false
+            }
         }
     },
 

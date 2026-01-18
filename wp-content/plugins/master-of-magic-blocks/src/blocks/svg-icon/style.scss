@@ -9,4 +9,16 @@
     height: 48px;
     display: block;
   }
+
+  svg:hover {
+    scale: 1.05;
+    transition: scale 0.3s ease-in-out;
+    color: color-mix(in srgb, currentColor 85%, black);
+  }
+}
+
+.mom-svg-icon__link {
+  display: inline-flex;
+  text-decoration: none;
+  color: inherit;
 }

@@ -1,11 +1,11 @@
-/**
- * SVG Icon block — editor
- * Media picker in block UI + frontend-identical preview via ServerSideRender.
- */
-
 import { __ } from '@wordpress/i18n';
-import { useBlockProps } from '@wordpress/block-editor';
-import { Button, Notice } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import {
+  useBlockProps,
+  BlockControls,
+  LinkControl,
+} from '@wordpress/block-editor';
+import { Button, Notice, Popover, ToolbarButton } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -17,11 +17,11 @@ const isSvg = media => {
   return url.toLowerCase().endsWith('.svg');
 };
 
-export default function Edit({ attributes, setAttributes }) {
-  const { mediaId, mediaUrl } = attributes;
+export default function Edit({ attributes, setAttributes, isSelected }) {
+  const { mediaId, mediaUrl, link } = attributes;
+  const [isLinkPickerOpen, setIsLinkPickerOpen] = useState(false);
 
   const blockProps = useBlockProps();
-
   const hasSvg = !!mediaId;
 
   const onSelectMedia = media => {
@@ -32,15 +32,70 @@ export default function Edit({ attributes, setAttributes }) {
 
     setAttributes({
       mediaId: media.id ?? 0,
-      // keep this only for the warning and editor convenience; render comes from PHP
       mediaUrl: media.url || media.source_url || '',
     });
   };
 
   const removeMedia = () => setAttributes({ mediaId: 0, mediaUrl: '' });
 
+  const unlink = () => {
+    setAttributes({ link: { url: '', opensInNewTab: false } });
+    setIsLinkPickerOpen(false);
+  };
+
+  const hasLink = !!link?.url;
+
   return (
     <div {...blockProps}>
+      {/* Toolbar: Link / Unlink */}
+      <BlockControls>
+        <ToolbarButton
+          label={__('Link', 'master-of-magic-blocks')}
+          onClick={() => setIsLinkPickerOpen(v => !v)}
+          isPressed={isLinkPickerOpen}
+          disabled={!hasSvg}
+        >
+          {__('Link', 'master-of-magic-blocks')}
+        </ToolbarButton>
+
+        {hasLink && (
+          <ToolbarButton
+            label={__('Unlink', 'master-of-magic-blocks')}
+            onClick={unlink}
+            disabled={!hasSvg}
+          >
+            {__('Unlink', 'master-of-magic-blocks')}
+          </ToolbarButton>
+        )}
+      </BlockControls>
+
+      {/* Link popover */}
+      {isSelected && isLinkPickerOpen && (
+        <Popover
+          placement="bottom"
+          onClose={() => setIsLinkPickerOpen(false)}
+          focusOnMount="firstElement"
+        >
+          <div style={{ padding: '12px', width: '100%' }}>
+            <LinkControl
+              value={{
+                url: link?.url || '',
+                opensInNewTab: !!link?.opensInNewTab,
+              }}
+              onChange={next =>
+                setAttributes({
+                  link: {
+                    url: next.url || '',
+                    opensInNewTab: !!next.opensInNewTab,
+                  },
+                })
+              }
+            />
+          </div>
+        </Popover>
+      )}
+
+      {/* Existing Media UI */}
       <MediaUploadCheck>
         <MediaUpload
           onSelect={onSelectMedia}

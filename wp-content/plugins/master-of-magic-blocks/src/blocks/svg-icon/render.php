@@ -2,9 +2,9 @@
 /**
  * Render callback for SVG Icon block (minimal version)
  *
- * @param array    $attributes
- * @param string   $content
- * @param WP_Block $block
+ * @param array    $attributes Block attributes.
+ * @param string   $content    Block content.
+ * @param WP_Block $block      Block instance.
  *
  * @package Master_of_Magic_Theme
  * @formatter Prettier
@@ -40,8 +40,27 @@ $svg = preg_replace(
 	$svg
 );
 
+// Optional: also convert stroke icons (Instagram) to currentColor.
+$svg = preg_replace(
+	'/\sstroke=(["\'])(?!none\b)[^"\']*\1/i',
+	' stroke="currentColor"',
+	$svg
+);
+
+// Link handling.
+$icon_link = ( isset( $attributes['link'] ) && is_array( $attributes['link'] ) ) ? $attributes['link'] : [];
+$url       = isset( $icon_link['url'] ) ? (string) $icon_link['url'] : '';
+$new_tab   = ! empty( $icon_link['opensInNewTab'] );
 ?>
 
-<div <?php echo get_block_wrapper_attributes(); // phpcs:ignore ?>>
-	<?php echo $svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+<div <?php echo get_block_wrapper_attributes(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<?php if ( $url ) : ?>
+		<a class="mom-svg-icon__link"
+			href="<?php echo esc_url( $url ); ?>"
+			<?php echo $new_tab ? 'target="_blank" rel="noopener noreferrer"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<?php echo $svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		</a>
+	<?php else : ?>
+		<?php echo $svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	<?php endif; ?>
 </div>

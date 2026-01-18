@@ -23,6 +23,10 @@ export default ({ props }) => (
         value: 'primary-white',
       },
       {
+        label: __('CTA Gold', 'master-of-magic-theme'),
+        value: 'cta-gold',
+      },
+      {
         label: __('Invisible', 'master-of-magic-theme'),
         value: 'invisible',
       },

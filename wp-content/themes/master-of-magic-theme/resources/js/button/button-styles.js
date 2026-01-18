@@ -4,6 +4,7 @@
 export const BUTTON_STYLES = [
   { value: 'primary-dark' },
   { value: 'primary-white' },
+  { value: 'cta-gold' },
   { value: 'invisible' },
   { value: 'text-and-icon' },
   { value: 'm' },

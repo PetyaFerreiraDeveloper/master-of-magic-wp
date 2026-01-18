@@ -25,23 +25,28 @@
             "defaultSpacingSizes": false,
             "spacingSizes": [
                 {
-                    "name": "Small",
+                    "name": "Extra small 8px",
+                    "size": "0.5rem",
+                    "slug": "extra-small"
+                },
+                {
+                    "name": "Small 16px",
                     "size": "1rem",
                     "slug": "small"
                 },
                 {
-                    "name": "Medium",
+                    "name": "Medium 24px",
                     "size": "1.5rem",
                     "slug": "medium"
                 },
                 {
-                    "name": "Large",
+                    "name": "Large 16px-32px",
                     "size": "clamp(1rem, 2.5vw, 2rem)",
                     "slug": "large"
                 },
                 {
-                    "name": "Extra large",
-                    "size": "clamp(2rem, 4vw, 4rem);",
+                    "name": "Extra large 32px-64px",
+                    "size": "clamp(2rem, 4vw, 4rem)",
                     "slug": "extra-large"
                 }
             ]

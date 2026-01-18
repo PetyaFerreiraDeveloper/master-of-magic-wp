@@ -1,0 +1,11 @@
+.wp-block-heading.is-style-plain-link a,
+p.is-style-plain-link a {
+  text-decoration: underline;
+  padding-block: 0.5rem;
+  letter-spacing: 0.02em;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: color-mix(in srgb, currentColor 85%, black);
+  }
+}

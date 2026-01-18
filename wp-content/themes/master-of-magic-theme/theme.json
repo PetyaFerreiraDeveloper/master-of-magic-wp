@@ -14,6 +14,31 @@
                     "name": "Primary dark",
                     "slug": "primary-dark",
                     "color": "#1e2a39"
+                },
+                {
+                    "name": "Primary magic",
+                    "slug": "primary-magic",
+                    "color": "#C9A24D"
+                },
+                {
+                    "name": "Secondary magic",
+                    "slug": "secondary-magic",
+                    "color": "#E63946"
+                },
+                {
+                    "name": "Background light",
+                    "slug": "background-light",
+                    "color": "#F7F8FA"
+                },
+                {
+                    "name": "Text primary",
+                    "slug": "text-primary",
+                    "color": "#0F172A"
+                },
+                {
+                    "name": "Text secondary",
+                    "slug": "text-secondary",
+                    "color": "#6B7280"
                 }
             ]
         },
@@ -172,6 +197,18 @@
                 "typography": {
                     "fontSize": "var:preset|font-size|large",
                     "lineHeight": "1.4"
+                }
+            },
+            "button": {
+                "border": {
+                    "radius": "0.5rem"
+                }
+            }
+        },
+        "blocks": {
+            "core/button": {
+                "border": {
+                    "radius": "0.5rem"
                 }
             }
         }

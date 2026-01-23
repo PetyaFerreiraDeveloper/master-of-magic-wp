@@ -28,7 +28,7 @@
                 {
                     "name": "Background light",
                     "slug": "background-light",
-                    "color": "#F7F8FA"
+                    "color": "#E4E8EF"
                 },
                 {
                     "name": "Text primary",
@@ -196,6 +196,24 @@
             "h3": {
                 "typography": {
                     "fontSize": "var:preset|font-size|large",
+                    "lineHeight": "1.4"
+                }
+            },
+            "h4": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|medium",
+                    "lineHeight": "1.4"
+                }
+            },
+            "h5": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|regular",
+                    "lineHeight": "1.4"
+                }
+            },
+            "h6": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|small",
                     "lineHeight": "1.4"
                 }
             },

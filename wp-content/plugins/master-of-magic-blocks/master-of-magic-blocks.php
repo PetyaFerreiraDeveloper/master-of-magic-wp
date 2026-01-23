@@ -67,3 +67,38 @@ function master_of_magic_blocks_register_block_category( array $categories ): ar
 }
 
 add_filter( 'block_categories_all', 'master_of_magic_blocks_register_block_category' );
+
+
+/**
+ * Register Swiper styles and scripts. This is currently used by slider block.
+ */
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		$css_rel = 'assets/vendor/swiper/swiper-bundle.min.css';
+		$js_rel  = 'assets/vendor/swiper/swiper-bundle.min.js';
+
+		$css_path = MASTER_OF_MAGIC_BLOCKS_PATH . $css_rel;
+		$js_path  = MASTER_OF_MAGIC_BLOCKS_PATH . $js_rel;
+
+		$css_url = MASTER_OF_MAGIC_BLOCKS_URL . $css_rel;
+		$js_url  = MASTER_OF_MAGIC_BLOCKS_URL . $js_rel;
+		$css_ver = file_exists( $css_path ) ? filemtime( $css_path ) : null;
+		$js_ver  = file_exists( $js_path ) ? filemtime( $js_path ) : null;
+
+		wp_register_style(
+			'swiper',
+			$css_url,
+			[],
+			$css_ver
+		);
+
+		wp_register_script(
+			'swiper',
+			$js_url,
+			[],
+			$js_ver,
+			true
+		);
+	}
+);

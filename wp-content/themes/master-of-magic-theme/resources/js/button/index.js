@@ -86,7 +86,7 @@ const addButtonBlockClassName = (settings, name) => {
       className: {
         type: 'string',
         default:
-          'is-style-button-type-primary-dark is-style-button-size-m is-style-button-icon-size-small is-style-button-icon-mode-inherit',
+          'is-style-button-type-primary-dark is-style-button-size-m',
       },
       iconUrl: {
         type: 'string',

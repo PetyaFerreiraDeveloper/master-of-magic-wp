@@ -1,5 +1,5 @@
 /**
- * edit.js – MOM SVG Icon block
+ * edit.js – MOM SVG Icon block.
  */
 import { __ } from '@wordpress/i18n';
 import { useMemo, useState } from '@wordpress/element';
@@ -15,10 +15,13 @@ import ServerSideRender from '@wordpress/server-side-render';
 
 const isSvg = media => {
   const mime = media?.mime || media?.mime_type;
+  const subtype = media?.subtype;
+
   if (mime === 'image/svg+xml') return true;
+  if (media?.type === 'image' && subtype === 'svg+xml') return true;
 
   const url = media?.url || media?.source_url || '';
-  return url.toLowerCase().endsWith('.svg');
+  return url.toLowerCase().split('?')[0].endsWith('.svg');
 };
 
 export default function Edit({ attributes, setAttributes, isSelected }) {
@@ -31,8 +34,7 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
   const hasSvg = !!mediaId;
   const hasLink = !!link?.url;
 
-  // Only pass the attributes your PHP render actually needs.
-  // This prevents REST errors if some extra keys get injected into attributes.
+  // Only pass what PHP render needs (prevents REST validation issues).
   const ssrAttributes = useMemo(
     () => ({
       mediaId: mediaId || 0,
@@ -40,8 +42,6 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
         url: link?.url || '',
         opensInNewTab: !!link?.opensInNewTab,
       },
-      // If you ever use mediaUrl in PHP, you can include it here.
-      // mediaUrl: mediaUrl || '',
     }),
     [mediaId, link]
   );
@@ -52,14 +52,12 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
     const url = media?.url || media?.source_url || '';
 
     if (!isSvg(media)) {
-      // Store the invalid URL for a visible warning
       setInvalidSelectionUrl(url);
       setAttributes({ mediaId: 0, mediaUrl: '' });
       return;
     }
 
     setInvalidSelectionUrl('');
-
     setAttributes({
       mediaId: media.id ?? 0,
       mediaUrl: url,
@@ -79,7 +77,6 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
 
   return (
     <div {...blockProps}>
-      {/* Toolbar: Link / Unlink */}
       <BlockControls>
         <ToolbarButton
           label={__('Link', 'master-of-magic-blocks')}
@@ -104,35 +101,30 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
       {/* Link popover */}
       {isSelected && isLinkPickerOpen && (
         <Popover
-          placement="bottom"
+          placement="bottom-start"
           onClose={() => setIsLinkPickerOpen(false)}
           focusOnMount="firstElement"
         >
-          <div style={{ padding: '12px', width: '320px', maxWidth: '90vw' }}>
-            <LinkControl
-              value={{
-                url: link?.url || '',
-                opensInNewTab: !!link?.opensInNewTab,
-              }}
-              onChange={next =>
-                setAttributes({
-                  link: {
-                    url: next?.url || '',
-                    opensInNewTab: !!next?.opensInNewTab,
-                  },
-                })
-              }
-            />
-          </div>
+          <LinkControl
+            value={{
+              url: link?.url || '',
+              opensInNewTab: !!link?.opensInNewTab,
+            }}
+            onChange={next =>
+              setAttributes({
+                link: {
+                  url: next?.url || '',
+                  opensInNewTab: !!next?.opensInNewTab,
+                },
+              })
+            }
+          />
         </Popover>
       )}
 
-      {/* Media UI */}
       <MediaUploadCheck>
         <MediaUpload
           onSelect={onSelectMedia}
-          // Most compatible: allow images, then validate SVG in code.
-          // SVG upload is often controlled by a plugin anyway.
           allowedTypes={['image']}
           value={mediaId}
           render={({ open }) => (
@@ -169,7 +161,6 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
         />
       </MediaUploadCheck>
 
-      {/* Warnings */}
       {!!invalidSelectionUrl && (
         <Notice status="warning" isDismissible={false}>
           {__(
@@ -179,8 +170,7 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
         </Notice>
       )}
 
-      {/* Optional extra sanity warning: mediaUrl exists but doesn't look like SVG */}
-      {!!mediaUrl && !mediaUrl.toLowerCase().endsWith('.svg') && (
+      {!!mediaUrl && !mediaUrl.toLowerCase().split('?')[0].endsWith('.svg') && (
         <Notice status="warning" isDismissible={false}>
           {__(
             'The selected file does not appear to be an SVG. Please choose an SVG file.',

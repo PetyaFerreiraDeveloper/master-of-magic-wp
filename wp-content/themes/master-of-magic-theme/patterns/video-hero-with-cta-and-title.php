@@ -11,69 +11,84 @@
 
 ?>
 
-<!-- wp:cover {"dimRatio":30,"overlayColor":"off-black-950","isUserOverlayColor":true,"backgroundType":"video","minHeight":70,"minHeightUnit":"vh","isDark":false,"sizeSlug":"full","metadata":{"categories":["hero"],"name":"Video Hero with CTA and Title","patternName":"master-of-magic-theme/video-hero-with-title"},"align":"full","style":{"spacing":{"padding":{"top":"5vw","right":"5vw","bottom":"5vw","left":"5vw"},"margin":{"top":"0"}}}} -->
+<!-- wp:cover {"dimRatio":50,"overlayColor":"off-black-950","isUserOverlayColor":true,"backgroundType":"video","minHeight":70,"minHeightUnit":"vh","isDark":false,"sizeSlug":"full","metadata":{"categories":["hero"],"name":"Video Hero with CTA and Title","patternName":"master-of-magic-theme/video-hero-with-title"},"align":"full","style":{"spacing":{"padding":{"top":"5vw","right":"5vw","bottom":"5vw","left":"5vw"},"margin":{"top":"0"}}}} -->
 <div
 	class="wp-block-cover alignfull is-light"
 	style="margin-top:0;padding-top:5vw;padding-right:5vw;padding-bottom:5vw;padding-left:5vw;min-height:70vh"
 >
-	<span
+</video
+	><span
 	aria-hidden="true"
-	class="wp-block-cover__background has-off-black-950-background-color has-background-dim-30 has-background-dim"
+	class="wp-block-cover__background has-off-black-950-background-color has-background-dim"
 	></span>
 	<div class="wp-block-cover__inner-container">
-	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"top"}} -->
-	<div class="wp-block-group">
+	<!-- wp:columns {"className":"is-style-rbc-md-columns-direction\u002d\u002dreverse is-style-rbc-sm-columns-direction\u002d\u002dreverse","style":{"spacing":{"blockGap":{"top":"100px"}}}} -->
+	<div
+		class="wp-block-columns is-style-rbc-md-columns-direction--reverse is-style-rbc-sm-columns-direction--reverse"
+	>
+		<!-- wp:column {"width":"33%"} -->
+		<div class="wp-block-column" style="flex-basis:33%">
 		<!-- wp:group {"style":{"layout":{"selfStretch":"fixed","flexSize":"320px"},"spacing":{"blockGap":"24px"}},"layout":{"type":"default"}} -->
 		<div class="wp-block-group">
-		<!-- wp:paragraph {"style":{"layout":{"selfStretch":"fixed","flexSize":"330px"},"typography":{"fontSize":"17px","fontStyle":"normal","fontWeight":"300","lineHeight":"1.4","textTransform":"none","textDecoration":"none","letterSpacing":"0px"},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} -->
-		<p
-			class="has-white-color has-text-color has-link-color"
+			<!-- wp:paragraph {"align":"center","style":{"layout":{"selfStretch":"fixed","flexSize":"330px"},"typography":{"fontSize":"17px","fontStyle":"normal","fontWeight":"300","lineHeight":"1.4","textTransform":"none","textDecoration":"none","letterSpacing":"0px"},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} -->
+			<p
+			class="has-text-align-center has-white-color has-text-color has-link-color"
 			style="font-size:17px;font-style:normal;font-weight:300;letter-spacing:0px;line-height:1.4;text-decoration:none;text-transform:none"
-		>
-			Let 'em Roll is an album by American organist Big John Patton recorded
-			in 1965 and released on the Blue Note label.
-		</p>
-		<!-- /wp:paragraph -->
-
-		<!-- wp:buttons -->
-		<div class="wp-block-buttons">
-			<!-- wp:button {"textColor":"white","className":"is-style-button-type-primary-dark","style":{"typography":{"fontSize":"17px","fontStyle":"normal","fontWeight":"700","textDecoration":"none","textTransform":"uppercase","letterSpacing":"0px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"36px","right":"36px"}},"border":{"radius":"0px","top":{"radius":"0px","width":"0px","style":"none"},"right":{"radius":"0px","width":"0px","style":"none"},"bottom":{"radius":"0px","width":"0px","style":"none"},"left":{"radius":"0px","width":"0px","style":"none"}}}} -->
-			<div class="wp-block-button is-style-button-type-primary-dark">
-			<a
-				class="wp-block-button__link has-white-color has-text-color has-custom-font-size wp-element-button"
-				style="border-radius:0px;border-top-style:none;border-top-width:0px;border-right-style:none;border-right-width:0px;border-bottom-style:none;border-bottom-width:0px;border-left-style:none;border-left-width:0px;padding-top:14px;padding-right:36px;padding-bottom:14px;padding-left:36px;font-size:17px;font-style:normal;font-weight:700;letter-spacing:0px;text-decoration:none;text-transform:uppercase"
-				>book jan</a
 			>
+			Underholdning, der samler gæsterne og skaber fælles oplevelser.
+			</p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+			<div class="wp-block-buttons">
+			<!-- wp:button {"className":"is-style-button-size-m is-style-button-type-cta-gold","style":{"typography":{"textTransform":"uppercase"}},"fontSize":"medium"} -->
+			<div
+				class="wp-block-button is-style-button-size-m is-style-button-type-cta-gold"
+			>
+				<a
+				class="wp-block-button__link has-medium-font-size has-custom-font-size wp-element-button"
+				style="text-transform:uppercase"
+				>book underholding</a
+				>
 			</div>
 			<!-- /wp:button -->
-		</div>
-		<!-- /wp:buttons -->
+			</div>
+			<!-- /wp:buttons -->
 		</div>
 		<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
 
+		<!-- wp:column {"verticalAlignment":"top","width":"66%"} -->
+		<div
+		class="wp-block-column is-vertically-aligned-top"
+		style="flex-basis:66%"
+		>
 		<!-- wp:group {"className":"is-style-fade-in","style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fill","flexSize":null}},"layout":{"type":"default"}} -->
 		<div class="wp-block-group is-style-fade-in">
-		<!-- wp:paragraph {"align":"right","style":{"typography":{"fontSize":"148px","textTransform":"uppercase","fontStyle":"normal","fontWeight":"700","lineHeight":"0.8","letterSpacing":"-4px"}},"textColor":"luminous-vivid-orange"} -->
-		<p
-			class="has-text-align-right has-luminous-vivid-orange-color has-text-color"
+			<!-- wp:paragraph {"align":"right","style":{"typography":{"fontSize":"148px","textTransform":"uppercase","fontStyle":"normal","fontWeight":"700","lineHeight":"0.8","letterSpacing":"-4px"},"elements":{"link":{"color":{"text":"var:preset|color|primary-magic"}}}},"textColor":"primary-magic"} -->
+			<p
+			class="has-text-align-right has-primary-magic-color has-text-color has-link-color"
 			style="font-size:148px;font-style:normal;font-weight:700;letter-spacing:-4px;line-height:0.8;text-transform:uppercase"
-		>
+			>
 			master
-		</p>
-		<!-- /wp:paragraph -->
+			</p>
+			<!-- /wp:paragraph -->
 
-		<!-- wp:paragraph {"align":"right","style":{"typography":{"fontSize":"148px","textTransform":"uppercase","fontStyle":"normal","fontWeight":"700","lineHeight":"0.8","letterSpacing":"-4px"}},"textColor":"white"} -->
-		<p
+			<!-- wp:paragraph {"align":"right","style":{"typography":{"fontSize":"148px","textTransform":"uppercase","fontStyle":"normal","fontWeight":"700","lineHeight":"0.8","letterSpacing":"-4px"}},"textColor":"white"} -->
+			<p
 			class="has-text-align-right has-white-color has-text-color"
 			style="font-size:148px;font-style:normal;font-weight:700;letter-spacing:-4px;line-height:0.8;text-transform:uppercase"
-		>
+			>
 			of magic
-		</p>
-		<!-- /wp:paragraph -->
+			</p>
+			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /wp:columns -->
 	</div>
 </div>
 <!-- /wp:cover -->

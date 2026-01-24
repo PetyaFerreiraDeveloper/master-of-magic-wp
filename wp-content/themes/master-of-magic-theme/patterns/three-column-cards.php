@@ -73,12 +73,11 @@
 		class="wp-block-group has-primary-dark-background-color has-background"
 		style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px"
 		>
-		<!-- wp:image {"id":309,"aspectRatio":"16/9","scale":"cover","sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":{"topLeft":"4px","topRight":"4px","bottomLeft":"4px","bottomRight":"4px"}}}} -->
+		<!-- wp:image {"aspectRatio":"16/9","scale":"cover","sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":{"topLeft":"4px","topRight":"4px","bottomLeft":"4px","bottomRight":"4px"}}}} -->
 		<figure class="wp-block-image size-full has-custom-border">
 			<img
-			src="http://localhost/wp-content/uploads/2026/01/jan-with-glass-scaled.jpg"
+			src=""
 			alt=""
-			class="wp-image-309"
 			style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px;aspect-ratio:16/9;object-fit:cover"
 			/>
 		</figure>
@@ -110,20 +109,15 @@
 
 		<!-- wp:buttons -->
 		<div class="wp-block-buttons">
-		<!-- wp:button {"className":"is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l","fontSize":"regular","iconUrl":"http://localhost/wp-content/uploads/2025/11/nav-arrow-right.svg"} -->
+		<!-- wp:button {"className":"is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l","fontSize":"regular"} -->
 		<div
 			class="wp-block-button is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l"
-			style="--custom-icon-url:url(http://localhost/wp-content/uploads/2025/11/nav-arrow-right.svg)"
 		>
 			<a
 			class="wp-block-button__link has-regular-font-size has-custom-font-size wp-element-button"
-			href="http://localhost/firma-fest/"
-			>Go to overview<img
-				class="wp-image-372"
-				style="width: 24px;"
-				src=""
-				alt=""
-			/></a>
+			href="firma-fest/"
+			>Go to overview</a
+			>
 		</div>
 		<!-- /wp:button -->
 		</div>
@@ -138,12 +132,11 @@
 		class="wp-block-group has-primary-magic-background-color has-background"
 		style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px"
 		>
-		<!-- wp:image {"id":90,"aspectRatio":"16/9","scale":"cover","sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":{"topLeft":"4px","topRight":"4px","bottomLeft":"4px","bottomRight":"4px"}}}} -->
+		<!-- wp:image {"aspectRatio":"16/9","scale":"cover","sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":{"topLeft":"4px","topRight":"4px","bottomLeft":"4px","bottomRight":"4px"}}}} -->
 		<figure class="wp-block-image size-full has-custom-border">
 			<img
-			src="http://localhost/wp-content/uploads/2025/11/TrylleJan-2-1024x432-1.jpg"
+			src=""
 			alt=""
-			class="wp-image-90"
 			style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px;aspect-ratio:16/9;object-fit:cover"
 			/>
 		</figure>
@@ -171,20 +164,15 @@
 
 		<!-- wp:buttons -->
 		<div class="wp-block-buttons">
-		<!-- wp:button {"backgroundColor":"primary-magic","className":"is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l","fontSize":"regular","iconUrl":"http://localhost/wp-content/uploads/2025/11/nav-arrow-right.svg"} -->
+		<!-- wp:button {"backgroundColor":"primary-magic","className":"is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l","fontSize":"regular"} -->
 		<div
 			class="wp-block-button is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l"
-			style="--custom-icon-url:url(http://localhost/wp-content/uploads/2025/11/nav-arrow-right.svg)"
 		>
 			<a
 			class="wp-block-button__link has-primary-magic-background-color has-background has-regular-font-size has-custom-font-size wp-element-button"
 			href="/julefrokost"
-			>Go to overview<img
-				class="wp-image-372"
-				style="width: 24px;"
-				src=""
-				alt=""
-			/></a>
+			>Go to overview</a
+			>
 		</div>
 		<!-- /wp:button -->
 		</div>
@@ -199,12 +187,11 @@
 		class="wp-block-group has-secondary-magic-background-color has-background"
 		style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px"
 		>
-		<!-- wp:image {"id":215,"aspectRatio":"16/9","scale":"cover","sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":{"topLeft":"4px","topRight":"4px","bottomLeft":"4px","bottomRight":"4px"}}}} -->
+		<!-- wp:image {"aspectRatio":"16/9","scale":"cover","sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":{"topLeft":"4px","topRight":"4px","bottomLeft":"4px","bottomRight":"4px"}}}} -->
 		<figure class="wp-block-image size-full has-custom-border">
 			<img
-			src="http://localhost/wp-content/uploads/2026/01/milad-fakurian-iFHGJUgFymw-unsplash-scaled.jpg"
+			src=""
 			alt=""
-			class="wp-image-215"
 			style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px;aspect-ratio:16/9;object-fit:cover"
 			/>
 		</figure>
@@ -236,20 +223,15 @@
 
 		<!-- wp:buttons -->
 		<div class="wp-block-buttons">
-		<!-- wp:button {"backgroundColor":"secondary-magic","className":"is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l","fontSize":"regular","iconUrl":"http://localhost/wp-content/uploads/2025/11/nav-arrow-right.svg"} -->
+		<!-- wp:button {"backgroundColor":"secondary-magic","className":"is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l","fontSize":"regular"} -->
 		<div
 			class="wp-block-button is-style-button-type-text-link is-style-button-type-primary-dark is-style-button-icon-right is-style-button-icon-mode-inherit is-style-button-size-l"
-			style="--custom-icon-url:url(http://localhost/wp-content/uploads/2025/11/nav-arrow-right.svg)"
 		>
 			<a
 			class="wp-block-button__link has-secondary-magic-background-color has-background has-regular-font-size has-custom-font-size wp-element-button"
 			href="/konfirmation"
-			>Go to overview<img
-				class="wp-image-372"
-				style="width: 24px;"
-				src=""
-				alt=""
-			/></a>
+			>Go to overview</a
+			>
 		</div>
 		<!-- /wp:button -->
 		</div>

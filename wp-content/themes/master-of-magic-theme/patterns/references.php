@@ -61,14 +61,9 @@
 	<div class="wp-block-master-of-magic-blocks-slider-slide swiper-slide">
 	<!-- wp:group {"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group">
-		<!-- wp:image {"id":90,"aspectRatio":"1","scale":"cover","sizeSlug":"full","linkDestination":"none"} -->
+		<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"full","linkDestination":"none"} -->
 		<figure class="wp-block-image size-full">
-		<img
-			src="http://localhost/wp-content/uploads/2025/11/TrylleJan-2-1024x432-1.jpg"
-			alt=""
-			class="wp-image-90"
-			style="aspect-ratio:1;object-fit:cover"
-		/>
+		<img src="" style="aspect-ratio:1;object-fit:cover" />
 		</figure>
 		<!-- /wp:image -->
 
@@ -95,14 +90,9 @@
 	<div class="wp-block-master-of-magic-blocks-slider-slide swiper-slide">
 	<!-- wp:group {"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group">
-		<!-- wp:image {"id":9,"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+		<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 		<figure class="wp-block-image size-large">
-		<img
-			src="http://localhost/wp-content/uploads/2025/10/40-scaled-1-683x1024.jpg"
-			alt=""
-			class="wp-image-9"
-			style="aspect-ratio:1;object-fit:cover"
-		/>
+		<img src="" alt="" style="aspect-ratio:1;object-fit:cover" />
 		</figure>
 		<!-- /wp:image -->
 
@@ -127,14 +117,9 @@
 	<div class="wp-block-master-of-magic-blocks-slider-slide swiper-slide">
 	<!-- wp:group {"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group">
-		<!-- wp:image {"id":309,"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+		<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 		<figure class="wp-block-image size-large">
-		<img
-			src="http://localhost/wp-content/uploads/2026/01/jan-with-glass-1024x1024.jpg"
-			alt=""
-			class="wp-image-309"
-			style="aspect-ratio:1;object-fit:cover"
-		/>
+		<img src="" alt="" style="aspect-ratio:1;object-fit:cover" />
 		</figure>
 		<!-- /wp:image -->
 
@@ -161,14 +146,9 @@
 	<div class="wp-block-master-of-magic-blocks-slider-slide swiper-slide">
 	<!-- wp:group {"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group">
-		<!-- wp:image {"id":88,"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+		<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 		<figure class="wp-block-image size-large">
-		<img
-			src="http://localhost/wp-content/uploads/2025/11/Jan-uden-krop-scaled-e1769161782542-960x1024.jpg"
-			alt=""
-			class="wp-image-88"
-			style="aspect-ratio:1;object-fit:cover"
-		/>
+		<img src="" alt="" style="aspect-ratio:1;object-fit:cover" />
 		</figure>
 		<!-- /wp:image -->
 

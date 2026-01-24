@@ -37,27 +37,21 @@
 		<div
 			class="wp-block-column has-white-color has-text-color has-link-color"
 			style="flex-basis:60px"
-		>
-			<!-- wp:master-of-magic-blocks/svg-icon {"style":{"elements":{"link":{"color":{"text":"var:preset|color|white"}}},"typography":{"textAlign":"center"},"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}},"textColor":"white"} /-->
-		</div>
+		></div>
 		<!-- /wp:column -->
 
 		<!-- wp:column {"verticalAlignment":"center","width":"60px"} -->
 		<div
 			class="wp-block-column is-vertically-aligned-center"
 			style="flex-basis:60px"
-		>
-			<!-- wp:master-of-magic-blocks/svg-icon {,"style":{"elements":{"link":{"color":{"text":"var:preset|color|white"}}},"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}},"textColor":"white"} /-->
-		</div>
+		></div>
 		<!-- /wp:column -->
 
 		<!-- wp:column {"verticalAlignment":"center","width":"60px"} -->
 		<div
 			class="wp-block-column is-vertically-aligned-center"
 			style="flex-basis:60px"
-		>
-			<!-- wp:master-of-magic-blocks/svg-icon {"style":{"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
-		</div>
+		></div>
 		<!-- /wp:column -->
 		</div>
 		<!-- /wp:columns -->
@@ -77,18 +71,22 @@
 		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|extra-small"}},"layout":{"type":"constrained"}} -->
 		<div class="wp-block-group">
 		<!-- wp:paragraph {"className":"is-style-plain-link"} -->
-		<p class="is-style-plain-link"><a href="/">Konfirmation</a></p>
-		<!-- /wp:paragraph -->
-
-		<!-- wp:paragraph {"className":"is-style-plain-link"} -->
 		<p class="is-style-plain-link">
-			<a href="/">Underholdning til firmafest</a>
+			<a href="/konfirmation">Konfirmation</a>
 		</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:paragraph {"className":"is-style-plain-link"} -->
 		<p class="is-style-plain-link">
-			<a href="/">Underholdning til julefrokost</a>
+			<a href="/firma-fest">Underholdning til firmafest</a>
+		</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:paragraph {"className":"is-style-plain-link"} -->
+		<p class="is-style-plain-link">
+			<a href="/julefrokost" data-type="page" data-id="528"
+			>Underholdningtil julefrokost</a
+			>
 		</p>
 		<!-- /wp:paragraph -->
 		</div>

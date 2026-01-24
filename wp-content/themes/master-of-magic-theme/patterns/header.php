@@ -11,14 +11,16 @@
 
 ?>
 
-<!-- wp:group {"tagName":"header","style":{"spacing":{"padding":{"top":"16px","bottom":"16px"}},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"backgroundColor":"primary-dark","textColor":"white","layout":{"type":"constrained"}} -->
+<!-- wp:group {"tagName":"header","metadata":{"name":"Header"},"style":{"spacing":{"padding":{"top":"16px","bottom":"16px"}},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"backgroundColor":"primary-dark","textColor":"white","layout":{"type":"constrained"}} -->
 <header
 	class="wp-block-group has-white-color has-primary-dark-background-color has-text-color has-background has-link-color"
 	style="padding-top:16px;padding-bottom:16px"
 >
 	<!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
 	<div class="wp-block-group alignwide">
-	<!-- wp:master-of-magic-blocks/svg-icon /-->
+	<!-- wp:group {"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group"></div>
+	<!-- /wp:group -->
 
 	<!-- wp:group {"style":{"spacing":{"blockGap":"20px"}},"layout":{"type":"flex","verticalAlignment":"center"}} -->
 	<div class="wp-block-group">

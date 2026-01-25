@@ -2,3 +2,8 @@
 @use 'embed' as *;
 @use 'fadein' as *;
 @use 'plain-link' as *;
+
+.wp-block-navigation__responsive-container-open.always-shown,
+.wp-block-navigation__responsive-container-close {
+  padding: 0.5rem;
+}

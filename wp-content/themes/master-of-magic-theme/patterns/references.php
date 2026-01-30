@@ -3,7 +3,7 @@
  * Title: References Slider
  * Slug: master-of-magic-theme/references-slider
  * Categories: heroes
- * Description: References slider pattern for Master of Magic Theme.
+ * Description: References slider With Images pattern for Master of Magic Theme.
  *
  * @package master-of-magic-theme
  * @formatter Prettier
